@@ -5,7 +5,7 @@ br_token brt_sdl_surface_h = BRT_NONE;
 /*
  * Main entry point for device - this may get redefined by the build system.
  */
-br_device *BR_EXPORT BrDrv1SDL2Begin(const char *arguments)
+br_device *BR_EXPORT Drv1SDL2Begin(const char *identifier, const char *arguments)
 {
     br_device *device;
     (void)arguments;
@@ -13,7 +13,7 @@ br_device *BR_EXPORT BrDrv1SDL2Begin(const char *arguments)
     /*
      * Set up device
      */
-    if((device = DeviceSDL2Allocate("SDL2")) == NULL)
+    if((device = DeviceSDL2Allocate(identifier)) == NULL)
         return NULL;
 
 //    /*
@@ -40,21 +40,14 @@ br_device *BR_EXPORT BrDrv1SDL2Begin(const char *arguments)
     return device;
 }
 
+br_device *BR_EXPORT BrDrv1SDL2Begin(const char *arguments)
+{
+	return Drv1SDL2Begin("SDL2", arguments);
+}
+
 #ifdef DEFINE_BR_ENTRY_POINT
 br_device *BR_EXPORT BrDrv1Begin(const char *arguments)
 {
     return BrDrv1SDL2Begin(arguments);
 }
 #endif
-
-br_device *BR_EXPORT BrDrv1MCGABegin(const char *arguments)
-{
-    /* TODO: implement */
-    return NULL;
-}
-
-br_device *BR_EXPORT BrDrv1VESABegin(const char *arguments)
-{
-    /* TODO: implement */
-    return NULL;
-}

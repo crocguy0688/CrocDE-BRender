@@ -44,6 +44,30 @@ if (BRENDER_BUILD_DRIVERS)
                 )
     endif()
 
+    if (TARGET mcga)
+        install(TARGETS mcga-headers
+                EXPORT Core
+                FILE_SET include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/brender/mcga
+                )
+
+        install(TARGETS mcga
+                EXPORT Core
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}/brender
+                )
+    endif()
+
+    if (TARGET vesa)
+        install(TARGETS vesa-headers
+                EXPORT Core
+                FILE_SET include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/brender/vesa
+                )
+
+        install(TARGETS vesa
+                EXPORT Core
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}/brender
+                )
+    endif()
+
     if (TARGET softrend)
         install(TARGETS softrend
                 EXPORT Core
