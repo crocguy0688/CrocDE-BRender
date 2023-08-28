@@ -4,6 +4,7 @@ add_subdirectory(mkres)
 add_subdirectory(devpmtest)
 add_subdirectory(dosbase)
 add_subdirectory(tutorials)
+add_subdirectory(samples)
 
 if(WIN32)
     add_subdirectory(ddrawtest)
