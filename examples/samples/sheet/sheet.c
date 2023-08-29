@@ -13,8 +13,6 @@
 #include "dosio.h"
 #include "fmt.h"
 
-#include "cube.h"
-
 #define S0 BR_SCALAR(0)
 #define S1 BR_SCALAR(1)
 
