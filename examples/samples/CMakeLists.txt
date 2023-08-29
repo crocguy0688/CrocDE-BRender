@@ -1,1 +1,1 @@
-add_subdirectory(minzb)
+add_subdirectory(minimal)

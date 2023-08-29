@@ -5,8 +5,6 @@
  * $Locker:  $
  *
  */
-#include <stddef.h>
-#include <stdio.h>
 
 #include "brender.h"
 #include "dosio.h"
@@ -21,40 +19,22 @@ br_pixelmap *screen_buffer, *back_buffer, *depth_buffer;
  */
 br_actor *observer, *world;
 
-/*
- * Main
- */
 int main(int argc, char **argv)
 {
-    br_actor    *a;
-    br_pixelmap *palette;
-    int          i;
+    br_actor *a;
+    int       i;
 
     /*
      * Setup renderer and screen
      */
     BrBegin();
-    screen_buffer = DOSGfxBegin(NULL);
-    BrZbBegin(screen_buffer->type, BR_PMT_DEPTH_16);
-
-    /*
-     * Setup CLUT (ignored in true-colour)
-     */
-    palette = BrPixelmapLoad("std.pal");
-    if(palette)
-        DOSGfxPaletteSet(palette);
-
-    /*
-     * Allocate other buffers
-     */
-    back_buffer  = BrPixelmapMatch(screen_buffer, BR_PMMATCH_OFFSCREEN);
-    depth_buffer = BrPixelmapMatch(screen_buffer, BR_PMMATCH_DEPTH_16);
+    InitializeSampleZBuffer(&screen_buffer, &back_buffer, &depth_buffer);
 
     /*
      * Build the a world
      */
     world    = BrActorAllocate(BR_ACTOR_NONE, NULL);
-    observer = BrActorAdd(world, BrActorAllocate(BR_ACTOR_CAMERA, NULL));
+    observer = CreateSampleCamera(world);
     BrLightEnable(BrActorAdd(world, BrActorAllocate(BR_ACTOR_LIGHT, NULL)));
 
     a                    = BrActorAdd(world, BrActorAllocate(BR_ACTOR_MODEL, NULL));
@@ -65,7 +45,9 @@ int main(int argc, char **argv)
     /*
      * Tumble the actor around
      */
-    for(i = 0; i < 360; i++) {
+    float dt;
+    i = 0;
+    while(UpdateSample(observer, &dt)) {
         /*
          * Clear the buffers
          */
@@ -78,14 +60,15 @@ int main(int argc, char **argv)
         a->t.t.euler.e.a = BR_ANGLE_DEG(i);
         a->t.t.euler.e.b = BR_ANGLE_DEG(i * 2);
         a->t.t.euler.e.c = BR_ANGLE_DEG(i * 3);
+
+        i++;
+        if(i >= 360)
+            i = 0;
     }
 
     /*
      * Close down
      */
-    BrPixelmapFree(depth_buffer);
-    BrPixelmapFree(back_buffer);
-
     BrZbEnd();
     DOSGfxEnd();
     BrEnd();
