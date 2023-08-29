@@ -50,13 +50,15 @@ int Frozen = 0;
 #define MAX_LENGTH      BR_SCALAR(0.20)
 #define GRAVITY         BR_SCALAR(-0.0001)
 #define FRICTION        BR_SCALAR(0.3)
+#define CYCLES          20
 #define RADIUS          BR_SCALAR(0.3)
 #define RADIUS2         BR_SCALAR(0.3 * 0.3)
 #define FORCE           BR_SCALAR(0.7)
 #define PLANE_FORCE     BR_SCALAR(0.3)
 #define DAMPING         BR_SCALAR(0.8)
+#define DT              BR_SCALAR(1)
 
-float dt;
+br_pixelmap *palette;
 
 void InitialiseSheetModel(br_model *model)
 {
@@ -287,11 +289,11 @@ void UpdateDynamics(br_model *model, br_vector3 *gravity)
             BrVector3Scale(&tmp, gravity, GRAVITY);
             BrVector3Accumulate(&acceleration, &tmp);
 
-            BrVector3Scale(&acceleration, &acceleration, dt);
+            BrVector3Scale(&acceleration, &acceleration, DT);
             BrVector3Accumulate(&velocity[i][j], &acceleration);
 
             BrVector3Scale(&velocity[i][j], &velocity[i][j], DAMPING);
-            BrVector3Scale(&tmp, &velocity[i][j], dt);
+            BrVector3Scale(&tmp, &velocity[i][j], DT);
             BrVector3Add(&position[i][j], &current, &tmp);
         }
 
@@ -315,12 +317,31 @@ void PlaceSphere(br_actor *parent, br_model *model, br_vector3 *position, char *
     BrMatrix34PostTranslate(&sphere->t.t.mat, position->v[0], position->v[1], position->v[2]);
 }
 
+/*
+ * Find Failed callbacks to automatically load textures & tables
+ */
+br_pixelmap *BR_CALLBACK MapFindFailedLoad(const char *name)
+{
+    br_pixelmap *pm;
+
+    if((pm = BrPixelmapLoad(name)) != NULL) {
+        pm->identifier = BrResStrDup(pm, name);
+        if(pm->type == BR_PMT_INDEX_8) {
+            pm->map = palette;
+            pm      = BrPixelmapDeCLUT(pm);
+        }
+        BrMapAdd(pm);
+    }
+
+    return pm;
+}
+
 int main(void)
 {
     br_material *mats[10];
     br_actor    *world, *sheet, *camera, *light1, *light2, *light3;
     br_actor    *box, *system, *pivot;
-    br_pixelmap *depth_buffer, *shade, *design_1_pm, *design_2_pm, *palette;
+    br_pixelmap *depth_buffer, *shade, *design_1_pm, *design_2_pm;
     br_pixelmap *colour_buffer, *screen_buffer, *ball8_pm, *earth_pm;
     br_colour   *pal_entry;
     br_scalar    time = 0, scale;
@@ -330,17 +351,18 @@ int main(void)
     int i;
 
     BR_BANNER("Rubber Sheet", "1994-1995", "$Revision: 1.1 $");
-    /* Initialise BRender */
 
-    BrBegin();
+    /* Initialise BRender */
     InitializeSampleZBuffer(&screen_buffer, &colour_buffer, &depth_buffer);
+
+    palette = BrPixelmapLoad("std.pal");
 
     /*
       Load the materials
     */
 
     BrTableFindHook(BrTableFindFailedLoad);
-    BrMapFindHook(BrMapFindFailedLoad);
+    BrMapFindHook(MapFindFailedLoad);
     BrModelFindHook(BrModelFindFailedLoad);
     BrTableFindHook(BrTableFindFailedLoad);
 
@@ -364,12 +386,7 @@ int main(void)
 
     BrModelUpdate(sheet->model, BR_MODU_ALL);
 
-    box = BrActorAdd(system, BrActorAllocate(BR_ACTOR_MODEL, NULL));
-
-    box->model  = BrModelAllocate(NULL, 0, 0);
-    *box->model = Object01;
-
-    BrModelAdd(box->model);
+    box               = BrActorAdd(system, BrActorAllocate(BR_ACTOR_MODEL, NULL));
     box->material     = BrMaterialFind("plain_white");
     box->render_style = BR_RSTYLE_EDGES;
     BrMatrix34PostScale(&box->t.t.mat, BR_SCALAR(1.0), BR_SCALAR(1.0), BR_SCALAR(1.0));
@@ -388,7 +405,6 @@ int main(void)
     ((br_camera *)camera->type_data)->field_of_view = BR_ANGLE_DEG(45.0);
     ((br_camera *)camera->type_data)->hither_z      = BR_SCALAR(0.1);
     ((br_camera *)camera->type_data)->yon_z         = BR_SCALAR(20.0);
-    ((br_camera *)camera->type_data)->aspect        = BR_SCALAR(1.46);
     BrMatrix34Translate(&camera->t.t.mat, BR_SCALAR(0.0), BR_SCALAR(0.0), BR_SCALAR(4.0));
 
     /* The lights */
@@ -408,6 +424,7 @@ int main(void)
     /* Load and install palette */
     BrMatrix34Identity(&inverse);
 
+    float dt;
     while(UpdateSample(camera, &dt)) {
         int         mouse_x, mouse_y, mouse_buttons;
         br_matrix34 rotation;
@@ -426,7 +443,8 @@ int main(void)
         BrPixelmapDoubleBuffer(screen_buffer, colour_buffer);
 
         if(!Frozen) {
-            UpdateDynamics(sheet->model, &gravity);
+            for(i = 0; i < CYCLES; i++)
+                UpdateDynamics(sheet->model, &gravity);
 
             /* If the sheet has changed we need to tell BRender to */
             /* update the normals, bounding box and radius */

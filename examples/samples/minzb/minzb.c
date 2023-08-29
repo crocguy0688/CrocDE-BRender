@@ -27,7 +27,6 @@ int main(int argc, char **argv)
     /*
      * Setup renderer and screen
      */
-    BrBegin();
     InitializeSampleZBuffer(&screen_buffer, &back_buffer, &depth_buffer);
 
     /*

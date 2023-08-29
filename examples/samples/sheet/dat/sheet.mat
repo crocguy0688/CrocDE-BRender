@@ -1,0 +1,83 @@
+# Materials for sheet
+#
+
+# The material from which the sheet is made. It will be lit and
+# texture mapped made out of a fairly shiny material.
+#
+material = [
+	identifier = "sheet_top";
+	ambient = 0.05;
+	diffuse = 0.45;
+	specular = 0.20;
+	power = 10;
+	flags = [light,smooth];
+	index_base = 0;
+	index_range = 63;
+	colour_map = "rivrock1.pix";
+	index_shade = "shade.tab";
+];
+
+# A plain red texture for the balls and reverse side of sheet
+#
+material = [
+	identifier = "plain_red";
+	ambient = 0.05;
+	diffuse = 0.45;
+	specular = 0.50;
+	power = 10;
+	flags = [light,smooth];
+	index_base = 160;
+	index_range = 31;
+];
+
+# A plain green texture for one of the balls
+#
+
+material = [
+	identifier = "plain_green";
+	ambient = 0.05;
+	diffuse = 0.45;
+	specular = 0.50;
+	power = 10;
+	flags = [light,smooth];
+	index_base = 96;
+	index_range = 31;
+];
+
+# Solid white for the box
+#
+material = [
+	identifier = "plain_white";
+	flags = [always_visible, two_sided];
+	index_base = 255;
+	index_range = 0;
+];
+
+
+
+material = [
+	identifier = "ball8";
+	ambient = 0.05;
+	diffuse = 0.45;
+	specular = 0.50;
+	power = 10;
+	flags = [light,smooth];
+	index_base = 0;
+	index_range = 63;
+	colour_map = "8ball.pix";
+	index_shade = "shade.tab";
+	map_transform = [[1.3,0],[0,0.5],[-0.15,0.25]];
+];
+
+material = [
+	identifier = "earth";
+	ambient = 0.05;
+	diffuse = 0.45;
+	specular = 0.20;
+	power = 10;
+	flags = [light,smooth];
+	index_base = 0;
+	index_range = 63;
+	colour_map = "earth.pix";
+	index_shade = "shade.tab";
+];
