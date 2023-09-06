@@ -44,7 +44,7 @@ sub run_h2inc {
 	my (undef, $indir, $infile) = File::Spec->splitpath($inpath);
 
     my @params = (
-        $h2inc, "-nologo", '-G3', '-Zp4', '-w', '-c', '-WIN32',
+        "wine", $h2inc, "-nologo", '-G3', '-Zp4', '-w', '-c', '-WIN32',
         '-DBASED_FLOAT=1', '-D_WIN32',
         '-D__VISUALC', '-D__H2INC__', '-D_NO_PROTOTYPES',
         "-I${incpath}", "-Fa${procpath}", $infile

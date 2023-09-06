@@ -24,10 +24,6 @@ endif ()
 option(BRENDER_BUILD_DRIVERS "Build Drivers" ON)
 option(BRENDER_BUILD_SOFT "Build Software Renderer" OFF)
 
-if (BRENDER_BUILD_SOFT AND (NOT WIN32 OR NOT MSVC OR (NOT CMAKE_GENERATOR_PLATFORM STREQUAL "Win32")))
-    message(FATAL_ERROR "Can only build the software renderer on 32-bit Windows using MSVC.")
-endif ()
-
 add_subdirectory(core)
 
 if (BRENDER_BUILD_DRIVERS)

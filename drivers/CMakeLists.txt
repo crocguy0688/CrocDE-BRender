@@ -10,6 +10,7 @@ endif ()
 target_link_libraries(brender-full INTERFACE glrend)
 
 if (BRENDER_BUILD_SOFT)
+    add_compile_options($<$<COMPILE_LANGUAGE:ASM>:-W0,-elf,-Zm>)
     add_subdirectory(softrend)
     add_subdirectory(pentprim)
     target_link_libraries(brender-full INTERFACE softrend pentprim)

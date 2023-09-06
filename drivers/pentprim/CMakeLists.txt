@@ -94,8 +94,6 @@ function(add_prim_suffixed base with_suffixes)
 
 	set(XXXX ${input_file} ${output_files})
 	set(PRIM_FILES ${PRIM_FILES} ${XXXX} PARENT_SCOPE)
-
-	set_property(SOURCE match.c APPEND PROPERTY OBJECT_DEPENDS ${output_files})
 endfunction()
 
 add_prim(prim_l15 "")

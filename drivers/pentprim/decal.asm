@@ -279,6 +279,6 @@ endif
 	x1 dword ?
 	x2 dword ?
 
-	fp_1_256 dword  0.00390625f ; might be better to work out a better representation 
+	fp_1_256 dword  0.00390625 ; might be better to work out a better representation 
 
 end
