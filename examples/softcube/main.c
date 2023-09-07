@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     err = BrDevBeginVar(&screen, "SDL2", BRT_WIDTH_I32, 1280, BRT_HEIGHT_I32, 720, BR_NULL_TOKEN);
 
     if(err != BRE_OK) {
-        BrDevBeginVar(NULL, "BrDevBeginVar() failed", "BRender Error", MB_OK | MB_ICONERROR);
+        BrLogError("APP", "BrDevBeginVar() failed");
         goto create_fail;
     }
 
@@ -89,12 +89,12 @@ int main(int argc, char **argv)
     }
 
     if(colour_buffer == NULL) {
-        MessageBoxA(NULL, "BrPixelmapAllocate() failed", "BRender Error", MB_OK | MB_ICONERROR);
+        BrLogError("APP", "BrPixelmapAllocate() failed");
         goto create_fail;
     }
 
     if((depth_buffer = BrPixelmapMatch(colour_buffer, BR_PMMATCH_DEPTH_16)) == NULL) {
-        MessageBoxA(NULL, "BrPixelmapMatch() failed", "BRender Error", MB_OK | MB_ICONERROR);
+        BrLogError("APP", "BrPixelmapMatch() failed");
         goto create_fail;
     }
 
