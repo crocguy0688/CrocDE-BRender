@@ -148,10 +148,15 @@ typedef struct br_lexer {
 typedef struct br_lexer_source {
     struct br_lexer_source *prev;
 
-    /*
-     * Source name and line number for error reporting
-     */
-    char     *name;
+/*
+ * Source name and line number for error reporting
+ */
+#if defined(__H2INC__)
+    char *name_;
+#else
+    char *name;
+#endif
+
     br_int_32 line;
 
     /*
@@ -172,7 +177,11 @@ typedef struct br_lexer_source {
 } br_lexer_source;
 
 typedef struct br_lexer_keyword {
-    char     *name;
+#if defined(__H2INC__)
+    char *name_;
+#else
+    char *name;
+#endif
     br_int_32 id;
 } br_lexer_keyword;
 

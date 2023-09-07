@@ -9,11 +9,11 @@
 	.model flat
 ifndef __WATCOMC__
 	.code
-__sar16	proc
+_sar16	proc
 	mov	eax,4[esp]
 	sar	eax,16
 	ret
-__sar16	endp
+_sar16	endp
 endif
 
 	end

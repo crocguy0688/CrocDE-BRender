@@ -12,8 +12,12 @@
  * Template structure used to map token/values to a structure
  */
 typedef struct br_tv_template_entry {
-    br_token     token;
-    const char  *name;
+    br_token token;
+#if defined(__H2INC__)
+    const char *name_;
+#else
+    const char *name;
+#endif
     br_uintptr_t offset;
     br_int_16    flags;
     br_int_16    conv;
@@ -153,7 +157,7 @@ enum br_tv_flag {
     BRTV_SET   = 0x0002, /* This entry is valid for Set operations	*/
     BRTV_ALL   = 0x0004, /* This entry is valid for QueryAll operations	*/
 
-    BRTV_ABS = 0x0008    /* 'offset' member of template contains value	*/
+    BRTV_ABS = 0x0008 /* 'offset' member of template contains value	*/
 };
 
 /*

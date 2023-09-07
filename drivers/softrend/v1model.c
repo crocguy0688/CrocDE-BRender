@@ -12,7 +12,6 @@
 #include "drv.h"
 #include "shortcut.h"
 #include "brassert.h"
-#include "blockops.h"
 
 #include "vecifns.h"
 

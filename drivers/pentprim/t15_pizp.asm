@@ -10,18 +10,18 @@
 		include	drv.inc
 		.data
 
-z		dd	?
-i		dd	?
-du_numerator	dd	?
-dv_numerator	dd	?
-u_numerator	dd	?
-v_numerator	dd	?
-zdest		dd	?
-dest		dd	?
-dest2		dd	?
-source		dd	?
-denominator	dd	?
-dz		dd	?
+z		dd	0
+i		dd	0
+du_numerator	dd	0
+dv_numerator	dd	0
+u_numerator	dd	0
+v_numerator	dd	0
+zdest		dd	0
+dest		dd	0
+dest2		dd	0
+source		dd	0
+denominator	dd	0
+dz		dd	0
 
 		align 4
 

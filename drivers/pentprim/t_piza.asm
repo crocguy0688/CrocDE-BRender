@@ -15,7 +15,7 @@ WRAPROW	equ	1
 TRANSP	equ	1
 
 	.data
-noffset	dd	?
+noffset	dd	0
 
 	.code
 
