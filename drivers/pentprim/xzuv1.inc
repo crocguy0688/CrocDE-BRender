@@ -203,8 +203,8 @@ endif
 
 	;; U
 	;;
-		        movd 		mm0,dword ptr PARAM.d_u_y1	; Load dy1
-				punpckldq	mm0,dword ptr PARAM.d_u_y0	;          and dy0
+		        movd 		mm0,PARAM.d_u_y1	; Load dy1
+				punpckldq	mm0,qword ptr PARAM.d_u_y0	;          and dy0
 
 				PACK_U
 
@@ -252,8 +252,8 @@ endif
 
 	;; V
 	;;
-		        movd 		mm0,dword ptr PARAM.d_v_y1	; Load dy1
-				punpckldq	mm0,dword ptr PARAM.d_v_y0	;          and dy0
+		        movd 		mm0,PARAM.d_v_y1	; Load dy1
+				punpckldq	mm0,qword ptr PARAM.d_v_y0	;          and dy0
 
 				PACK_V
 
@@ -863,25 +863,25 @@ c_loop_body:
 		        movd		ebp,mm1
 		        movq		mm3,mm2
 
-		        movd		mm_t0, dword ptr [edi+edx*4]
+		        movd		mm_t0,[edi+edx*4]
 		        punpckldq	mm2,mm2
 
-		        movd		mm_t1, dword ptr [edi+ecx*4]
+		        movd		mm_t1,[edi+ecx*4]
 		        punpckhdq	mm3,mm3
 
-		        mov			dl, byte ptr [esi+ebx]			; Read Texel 2
+		        mov			dl,[esi+ebx]			; Read Texel 2
 		        punpcklbw	mm_01l,mm_01r
 
-		        mov			cl, byte ptr [esi+ebp]			; Read Texel 3
+		        mov			cl,[esi+ebp]			; Read Texel 3
 		        mov			byte ptr temp_mask+M2,dl
 
 		        pand		mm4,mm2
 		        pand		mm6,mm2
 
-		        movd		mm_t2, dword ptr [edi+edx*4]
+		        movd		mm_t2,[edi+edx*4]
 		        pand		mm5,mm3
 
-		        movd		mm_t3, dword ptr [edi+ecx*4]
+		        movd		mm_t3,[edi+ecx*4]
 		        pand		mm7,mm3
 
 		        mov			byte ptr temp_mask+M3,cl
@@ -1149,19 +1149,19 @@ endif
 
 		        movd		ebp,mm1
 
-		        movd		mm_t0, dword ptr [edi+edx*4]
+		        movd		mm_t0,[edi+edx*4]
 
-		        movd		mm_t1, dword ptr [edi+ecx*4]
+		        movd		mm_t1,[edi+ecx*4]
 
-		        mov			dl, byte ptr [esi+ebx]			; Read Texel 2
+		        mov			dl,[esi+ebx]			; Read Texel 2
 		        punpcklbw	mm_01l,mm_01r
 
-		        mov			cl, byte ptr [esi+ebp]			; Read Texel 3
+		        mov			cl,[esi+ebp]			; Read Texel 3
 		        mov			byte ptr temp_mask+M2,dl
 
-		        movd		mm_t2, dword ptr [edi+edx*4]
+		        movd		mm_t2,[edi+edx*4]
 
-		        movd		mm_t3, dword ptr [edi+ecx*4]
+		        movd		mm_t3,[edi+ecx*4]
 
 		        mov			byte ptr temp_mask+M3,cl
 		        punpcklbw	mm_23l,mm_23r
