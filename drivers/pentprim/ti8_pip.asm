@@ -6,7 +6,7 @@
 ;; Scanline loop for perpsective correct texture mapping
 ;;
 		.386p
-		.model	c,flat
+		.model	flat,c
 		include	drv.inc
 		.data
 

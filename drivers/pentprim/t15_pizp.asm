@@ -6,7 +6,7 @@
 ;; Scanline loop for 15 bit perpsective correct texture mapping
 ;;
 		.386p
-		.model	c,flat
+		.model	flat,c
 		include	drv.inc
 		.data
 
@@ -393,7 +393,7 @@ name		endp
 ScanLinePIZ2TIP	ScanLinePIZ2TIP256_RGB_555,\
 		<>,\
 		<inc al>,<dec al>,<inc ah>,<dec ah>,\
-		<>,<>
+		<>,<>,15
 
 ScanLinePIZ2TIP ScanLinePIZ2TIPB256_RGB_555,\
 		<>,\

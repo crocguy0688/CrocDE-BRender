@@ -7,7 +7,7 @@
 ;;
 
 	.386p
-	.model	c,flat
+	.model	flat,c
 	include drv.inc
 
 WRAP	equ	1
