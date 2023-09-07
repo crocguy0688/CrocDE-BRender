@@ -568,7 +568,7 @@ c_loop_body:
 			    and			ecx,WORK.u_mask	   		; Tidy up U accumulator
 			    and			ebp,WORK.v_mask	 		; Tidy up V accumulator
 
-			    FETCH_T0	dword ptr [edi+edx*4]	; Read palette (8.8.8)
+			    FETCH_T0	[edi+edx*4]	   			; Read palette (8.8.8)
 ;V
 
 			    lea			ebx,[ebp+ecx]	   		; Generate texture address
@@ -586,7 +586,7 @@ c_loop_body:
 			    and			ecx,WORK.u_mask	   		; Tidy up U accumulator
 			    and			ebp,WORK.v_mask	   		; Tidy up V accumulator
 
-			    FETCH_T1	dword ptr [edi+edx*4]	; Read palette (8.8.8) and merge texels 0 and 1 into same register
+			    FETCH_T1	[edi+edx*4]	   			; Read palette (8.8.8) and merge texels 0 and 1 into same register
 ;V
 
 			    lea			ebx,[ebp+ecx]	   		; Generate texture address
@@ -604,7 +604,7 @@ c_loop_body:
 			    and			ecx,WORK.u_mask	   		; Tidy up U accumulator
 			    and			ebp,WORK.v_mask	   		; Tidy up V accumulator
 
-			    FETCH_T2	dword ptr [edi+edx*4]	; Read palette (8.8.8)
+			    FETCH_T2	[edi+edx*4]	  			; Read palette (8.8.8)
 			    PAND_T01
 
 			    lea			ebx,[ebp+ecx]	   		; Generate texture address
@@ -623,7 +623,7 @@ endif
 			    and			ecx,WORK.u_mask	   		; Tidy up U accumulator
 			    and			ebp,WORK.v_mask	   		; Tidy up V accumulator
 
-			    FETCH_T3	dword ptr [edi+edx*4]	; Read palette (8.8.8)
+			    FETCH_T3	[edi+edx*4]	   			; Read palette (8.8.8)
 
 			    mov			byte ptr temp_mask+M3,dl
 			    PACK_T23
@@ -850,7 +850,7 @@ endif
 			    and			ecx,WORK.u_mask	   		; Tidy up U accumulator
 			    and			ebp,WORK.v_mask	 		; Tidy up V accumulator
 
-			    FETCH_T0	dword ptr [edi+edx*4]	; Read palette (8.8.8)
+			    FETCH_T0	[edi+edx*4]	   			; Read palette (8.8.8)
 			    psrlw		mm4,9					; mm4 = 0007f007fh
 
 			    lea			ebx,[ebp+ecx]	   		; Generate texture address
@@ -868,7 +868,7 @@ endif
 			    and			ecx,WORK.u_mask	   		; Tidy up U accumulator
 			    and			ebp,WORK.v_mask	   		; Tidy up V accumulator
 
-			    FETCH_T1	dword ptr [edi+edx*4]	; Read palette (8.8.8) and merge texels 0 and 1 into same register
+			    FETCH_T1	[edi+edx*4]	   			; Read palette (8.8.8) and merge texels 0 and 1 into same register
 ;V
 
 			    lea			ebx,[ebp+ecx]	   		; Generate texture address
@@ -887,7 +887,7 @@ endif
 			    and			ecx,WORK.u_mask	   		; Tidy up U accumulator
 			    and			ebp,WORK.v_mask	   		; Tidy up V accumulator
 
-			    FETCH_T2	dword ptr [edi+edx*4]	; Read palette (8.8.8)
+			    FETCH_T2	[edi+edx*4]	  			; Read palette (8.8.8)
 			    PAND_T01
 
 			    lea			ebx,[ebp+ecx]	   		; Generate texture address
@@ -901,7 +901,7 @@ if DITHER
 			    mov			ebx,WORK.h.start_scanline
 endif
 
-			    FETCH_T3	dword ptr [edi+edx*4]	; Read palette (8.8.8)
+			    FETCH_T3	[edi+edx*4]	   			; Read palette (8.8.8)
 			    mov			byte ptr temp_mask+M3,dl
 
 			    mov			edi,WORK.h.screen_address
