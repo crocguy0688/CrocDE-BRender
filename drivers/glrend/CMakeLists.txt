@@ -1,7 +1,5 @@
 project(glrend)
 
-find_package(OpenGL REQUIRED COMPONENTS OpenGL)
-
 add_custom_command(
         OUTPUT brender.vert.glsl.h
         COMMAND "${PERL_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/embedshader.pl" "g_DefaultVertexShader" "${CMAKE_CURRENT_SOURCE_DIR}/brender.vert.glsl" brender.vert.glsl.h
